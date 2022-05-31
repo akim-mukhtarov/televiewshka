@@ -10,6 +10,11 @@ In views you can define its content and how user actions and replies must be han
 When all stuff related particular step in user flow is held in one class, you can clearly
 see relationship between components
 
+Televiewshka supposed to be developed in such a manner to be compatible
+with a bunch of libs and frameworks for telegram bot api widely used by community
+
+I guess I should write few adaptors for this purpose someday
+
 ## (Supposed) Example
 
 ```py
