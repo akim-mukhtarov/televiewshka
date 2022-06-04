@@ -9,8 +9,10 @@ _adaptors = {
 
 
 def create_adaptor(bot) -> AbstractBaseAdaptor:
-    # adaptor = _adaptors.get(bot.__class__.__name__)
-    # if not adaptor:
-    #       raise
-    # return adaptor.__init__(bot)
-    pass
+    class_name = bot.__class__.__name__
+    adaptor = _adaptors.get(class_name)
+    if not adaptor:
+        raise ValueError(
+                f"{class_name} is not supported\n"
+                f"Suppoted classes: {list(_adaptors.keys())}")
+    return adaptor(bot)
