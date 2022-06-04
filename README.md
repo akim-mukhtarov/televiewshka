@@ -18,27 +18,40 @@ I guess I should write few adaptors for this purpose someday
 ## (Supposed) Example
 
 ```py
-from televiewshka import KeyboardView, KeyboardLayout, button, render
+from telebot import TeleBot
+from televiewshka import KeyboardView, \
+    KeyboardLayout, adaptors, handler, button, render
+
+# create adaptor for your lib/framework
+bot = TeleBot("super-secret")
+bot = adaptors.create_adaptor(bot)
 
 
+# specify views
 class FirstView(KeyboardView):
-    def next(self):
+    @bot.handler(action="next")
+    def go_next(self):
         return render("NextView", inplace=True, param=42)
 
-    @classmethod
-    def render(cls):
-        return KeyboardLayout(button("Go next", on_click="next"))
+    @staticmethod
+    def render():
+        return KeyboardLayout(
+            button("Go next", on_click="next"))
 
 
 class NextView(KeyboardView):
+    @bot.handler()
     def back(self):
         return render(FirstView, inplace=True)
 
-    @classmethod
-    def render(cls, param):
+    @staticmethod
+    def render(param: int):
         return KeyboardLayout(
             text=f"Passed param: {param}",
             button("Go back", on_click="back"))
+
+# run the bot
+bot.start()
 ```
 
 ## Some details explained
