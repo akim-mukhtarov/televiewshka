@@ -20,7 +20,7 @@ I guess I should write few adaptors for this purpose someday
 ```py
 from telebot import TeleBot
 from televiewshka import KeyboardView, \
-    KeyboardLayout, adaptors, handler, button, render
+    KeyboardLayout, Button, adaptors, handler, render
 
 # create adaptor for your lib/framework
 bot = TeleBot("super-secret")
@@ -36,7 +36,9 @@ class FirstView(KeyboardView):
     @staticmethod
     def render():
         return KeyboardLayout(
-            button("Go next", on_click="next"))
+            keyboard = (
+                Button("Go next", on_click="next"),
+            ))
 
 
 class NextView(KeyboardView):
@@ -48,7 +50,9 @@ class NextView(KeyboardView):
     def render(param: int):
         return KeyboardLayout(
             text=f"Passed param: {param}",
-            button("Go back", on_click="back"))
+            keyboard = (
+                Button("Go back", on_click="back"),
+            ))
 
 # run the bot
 bot.start()
